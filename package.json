@@ -1,0 +1,53 @@
+{
+  "name": "better-http-proxy-agent",
+  "version": "1.0.0",
+  "description": "An agent for HTTP through an HTTP(S) proxy server",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insightfuls/better-http-proxy-agent.git"
+  },
+  "keywords": [
+    "https",
+    "http",
+    "proxy",
+    "http proxy",
+    "https proxy",
+    "agent",
+    "connection",
+    "pool",
+    "pooling",
+    "connection pool",
+    "connection pooling",
+    "timeout",
+    "TLS",
+    "SSL",
+    "client",
+    "certificate",
+    "client certificate",
+    "basic",
+    "authentication",
+    "basic authentication"
+  ],
+  "author": "Ben Schmidt",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "index.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/insightfuls/better-http-proxy-agent/issues"
+  },
+  "homepage": "https://github.com/insightfuls/better-http-proxy-agent#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}
