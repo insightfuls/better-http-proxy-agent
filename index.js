@@ -45,6 +45,7 @@ HttpsProxyAgent.prototype.getName = getName;
 function construct(connectionOptions) {
 	connectionOptions = Object.assign({}, connectionOptions);
 	connectionOptions.agent = this;
+	connectionOptions.host = connectionOptions.hostname || connectionOptions.host;
 
 	this[OPTIONS] = connectionOptions;
 }
@@ -56,7 +57,7 @@ function addRequest(req, options) {
 	// to the absolute path of the URL that will be requested
 	var parsed = url.parse(req.path);
 	if (parsed.protocol == null) parsed.protocol = 'http:';
-	if (parsed.hostname == null) parsed.hostname = options.host || options.host;
+	if (parsed.hostname == null) parsed.hostname = options.hostname || options.host;
 	if (parsed.port == null) parsed.port = options.port;
 	if (parsed.port == 80) {
 		// if port is 80, then we can remove the port so that the

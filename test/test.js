@@ -36,6 +36,19 @@ describe("better-http-proxy-agent", () => {
 		});
 	});
 
+	it("uses hostname to avoid duplicating port", async () => {
+		await requestAndVerify({
+			agent: agent({
+				connectionOptions: { hostname: "localhost", host: "localhost:" + port }
+			}),
+			mock: await startMockHttpProxy({ port }),
+			requestOptions: { hostname: "www.example.com", host: "www.example.com:1234" },
+			expectations: {
+				mockURL: "http://www.example.com:1234/"
+			}
+		});
+	});
+
 	it("pools connections", async () => {
 		const mock = await startMockHttpProxy({
 			port,
@@ -43,8 +56,7 @@ describe("better-http-proxy-agent", () => {
 		});
 		const options = {
 			agent: agent({
-				agentOptions: { maxSockets: 1 },
-				connectionOptions: {},
+				agentOptions: { maxSockets: 1 }
 			}),
 			mock,
 			expectations: {
