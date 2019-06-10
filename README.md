@@ -58,10 +58,7 @@ const connectionOptions = {
 const agent = createAgent(agentOptions, connectionOptions);
 
 http.get("http://www.example.com/", {
-    agent,
-    cert: fs.readFileSync("api_auth_cert.pem"),
-    key: fs.readFileSync("api_auth_key.pem"),
-    passphrase: "secret"
+    agent
 });
 ```
 

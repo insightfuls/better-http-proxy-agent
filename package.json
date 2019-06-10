@@ -1,6 +1,6 @@
 {
   "name": "better-http-proxy-agent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An agent for HTTP through an HTTP(S) proxy server",
   "main": "index.js",
   "directories": {
