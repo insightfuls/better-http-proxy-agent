@@ -1,6 +1,7 @@
 const http = require('http');
 const https = require('https');
 const tls = require('tls');
+const shutdownDecorator = require('http-shutdown');
 const { readFile } = require('./read-file');
 
 const proxies = new Set();
@@ -35,7 +36,7 @@ class MockProxy {
 		this.connections = 0;
 		this.requests = [];
 		this._sockets = new Set();
-		this._server = server;
+		this._server = shutdownDecorator(server);
 		this._options = options;
 
 		this._server.on('request', (request, response) => {
@@ -54,16 +55,6 @@ class MockProxy {
 				return;
 			}
 		});
-
-		/*
-		 * The 500 is a workaround for NodeJS http(s).Server.close() not closing inactive
-		 * sockets (but only preventing acceptance of new connections).
-		 *
-		 * The 1 is a workaround for NodeJS not having a way to disable HTTP keep-alive
-		 * server-side (that I currently know of; using 0 disables the timeout, not the
-		 * keep-alive functionality).
-		 */
-		this._server.keepAliveTimeout = this._options.keepAlive ? 500 : 1;
 	}
 
 	start() {
@@ -78,7 +69,7 @@ class MockProxy {
 
 	stop() {
 		return new Promise((resolve, reject) => {
-			this._server.close((err) => {
+			this._server.shutdown((err) => {
 				if (err) reject(err);
 				else {
 					proxies.delete(this);
@@ -89,6 +80,12 @@ class MockProxy {
 	}
 
 	_respondToRequest(request, response) {
+		if (!this._options.keepAlive) {
+			response.on('finish', () => {
+				request.socket.destroy();
+			});
+		}
+
 		if (request.socket.encrypted && _requestCert(this._options)) {
 			let verifyError = request.socket._handle.verifyError();
 
