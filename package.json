@@ -1,6 +1,6 @@
 {
   "name": "better-http-proxy-agent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An agent for HTTP through an HTTP(S) proxy server",
   "main": "index.js",
   "directories": {
@@ -49,6 +49,6 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "http-shutdown": "^1.2.1",
-    "mocha": "^6.1.4"
+    "mocha": "^7.1.2"
   }
 }
