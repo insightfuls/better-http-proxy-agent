@@ -26,8 +26,10 @@ const http = require('http');
  * Options suitable for the base `http(s).Agent`.
  */
 const agentOptions = {
-    keepAlive: false,
+    keepAlive: true,
+    timeout: 55000, // for keepAlive
     maxSockets: 100,
+    maxFreeSockets: 10,
     maxCachedSessions: 200
 };
 
@@ -49,7 +51,7 @@ const connectionOptions = {
     protocol: "https:",
     host: "proxy.example.com",
     port: 3128,
-    timeout: 5000,
+    timeout: 5000, // for in-flight requests
     cert: fs.readFileSync("proxy_auth_cert.pem"),
     key: fs.readFileSync("proxy_auth_key.pem"),
     passphrase: "secret"
